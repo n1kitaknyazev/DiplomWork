@@ -1,0 +1,660 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище ShiraDKDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BuyingTickets">
+          <Key>
+            <PropertyRef Name="Number" />
+          </Key>
+          <Property Name="Number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PurchaseDate" Type="date" Nullable="false" />
+          <Property Name="SalesmanID" Type="int" Nullable="false" />
+          <Property Name="BuyerID" Type="int" />
+          <Property Name="EventID" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" />
+        </EntityType>
+        <EntityType Name="Events">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateStart" Type="date" Nullable="false" />
+          <Property Name="Duration" Type="float" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="OrganizerID" Type="int" Nullable="false" />
+          <Property Name="Price" Type="float" />
+          <Property Name="AvailableOfSeat" Type="int" />
+          <Property Name="NumberOfSeat" Type="int" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="Width" Type="float" />
+          <Property Name="Length" Type="float" />
+          <Property Name="Height" Type="float" />
+          <Property Name="Image" Type="image" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Weight" Type="float" />
+          <Property Name="Count" Type="int" />
+        </EntityType>
+        <EntityType Name="ItemsForEvents">
+          <Key>
+            <PropertyRef Name="Number" />
+          </Key>
+          <Property Name="Number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemsID" Type="int" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="EventsID" Type="int" />
+        </EntityType>
+        <EntityType Name="Organizers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="INN" Type="varchar" MaxLength="11" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WareHouse">
+          <Key>
+            <PropertyRef Name="Number" />
+          </Key>
+          <Property Name="Number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="DateOfReceipt" Type="date" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_BuyingTickets_Events">
+          <End Role="Events" Type="Self.Events" Multiplicity="1" />
+          <End Role="BuyingTickets" Type="Self.BuyingTickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Events">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BuyingTickets">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BuyingTickets_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="BuyingTickets" Type="Self.BuyingTickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BuyingTickets">
+              <PropertyRef Name="SalesmanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BuyingTickets_Users1">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="BuyingTickets" Type="Self.BuyingTickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BuyingTickets">
+              <PropertyRef Name="BuyerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Organizers">
+          <End Role="Organizers" Type="Self.Organizers" Multiplicity="1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="OrganizerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemsForEvents_Events">
+          <End Role="Events" Type="Self.Events" Multiplicity="0..1" />
+          <End Role="ItemsForEvents" Type="Self.ItemsForEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Events">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ItemsForEvents">
+              <PropertyRef Name="EventsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemsForEvents_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="0..1" />
+          <End Role="ItemsForEvents" Type="Self.ItemsForEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ItemsForEvents">
+              <PropertyRef Name="ItemsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WareHouse_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="WareHouse" Type="Self.WareHouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WareHouse">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WareHouse_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="WareHouse" Type="Self.WareHouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WareHouse">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ShiraDKDBModelContainer">
+          <EntitySet Name="BuyingTickets" EntityType="Self.BuyingTickets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemsForEvents" EntityType="Self.ItemsForEvents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Organizers" EntityType="Self.Organizers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WareHouse" EntityType="Self.WareHouse" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BuyingTickets_Events" Association="Self.FK_BuyingTickets_Events">
+            <End Role="Events" EntitySet="Events" />
+            <End Role="BuyingTickets" EntitySet="BuyingTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BuyingTickets_Users" Association="Self.FK_BuyingTickets_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="BuyingTickets" EntitySet="BuyingTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BuyingTickets_Users1" Association="Self.FK_BuyingTickets_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="BuyingTickets" EntitySet="BuyingTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Organizers" Association="Self.FK_Events_Organizers">
+            <End Role="Organizers" EntitySet="Organizers" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemsForEvents_Events" Association="Self.FK_ItemsForEvents_Events">
+            <End Role="Events" EntitySet="Events" />
+            <End Role="ItemsForEvents" EntitySet="ItemsForEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemsForEvents_Items" Association="Self.FK_ItemsForEvents_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="ItemsForEvents" EntitySet="ItemsForEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WareHouse_Items" Association="Self.FK_WareHouse_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="WareHouse" EntitySet="WareHouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WareHouse_Users" Association="Self.FK_WareHouse_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="WareHouse" EntitySet="WareHouse" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ShiraDKDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BuyingTickets" EntityType="ShiraDKDBModel.BuyingTicket" />
+          <EntitySet Name="Events" EntityType="ShiraDKDBModel.Event" />
+          <EntitySet Name="ItemsForEvents" EntityType="ShiraDKDBModel.ItemsForEvent" />
+          <EntitySet Name="Organizers" EntityType="ShiraDKDBModel.Organizer" />
+          <EntitySet Name="Roles" EntityType="ShiraDKDBModel.Role" />
+          <EntitySet Name="sysdiagrams" EntityType="ShiraDKDBModel.sysdiagram" />
+          <EntitySet Name="Users" EntityType="ShiraDKDBModel.User" />
+          <EntitySet Name="WareHouses" EntityType="ShiraDKDBModel.WareHouse" />
+          <AssociationSet Name="FK_BuyingTickets_Events" Association="ShiraDKDBModel.FK_BuyingTickets_Events">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="BuyingTicket" EntitySet="BuyingTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BuyingTickets_Users" Association="ShiraDKDBModel.FK_BuyingTickets_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="BuyingTicket" EntitySet="BuyingTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BuyingTickets_Users1" Association="ShiraDKDBModel.FK_BuyingTickets_Users1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="BuyingTicket" EntitySet="BuyingTickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Organizers" Association="ShiraDKDBModel.FK_Events_Organizers">
+            <End Role="Organizer" EntitySet="Organizers" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemsForEvents_Events" Association="ShiraDKDBModel.FK_ItemsForEvents_Events">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="ItemsForEvent" EntitySet="ItemsForEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="ShiraDKDBModel.FK_Users_Roles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WareHouse_Users" Association="ShiraDKDBModel.FK_WareHouse_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="WareHouse" EntitySet="WareHouses" />
+          </AssociationSet>
+          <EntitySet Name="Items" EntityType="ShiraDKDBModel.Item" />
+          <AssociationSet Name="FK_ItemsForEvents_Items" Association="ShiraDKDBModel.FK_ItemsForEvents_Items">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="ItemsForEvent" EntitySet="ItemsForEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WareHouse_Items" Association="ShiraDKDBModel.FK_WareHouse_Items">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="WareHouse" EntitySet="WareHouses" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="BuyingTicket">
+          <Key>
+            <PropertyRef Name="Number" />
+          </Key>
+          <Property Name="Number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SalesmanID" Type="Int32" Nullable="false" />
+          <Property Name="BuyerID" Type="Int32" />
+          <Property Name="EventID" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" />
+          <NavigationProperty Name="Event" Relationship="ShiraDKDBModel.FK_BuyingTickets_Events" FromRole="BuyingTicket" ToRole="Event" />
+          <NavigationProperty Name="User" Relationship="ShiraDKDBModel.FK_BuyingTickets_Users" FromRole="BuyingTicket" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="ShiraDKDBModel.FK_BuyingTickets_Users1" FromRole="BuyingTicket" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Duration" Type="Double" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OrganizerID" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="AvailableOfSeat" Type="Int32" />
+          <Property Name="NumberOfSeat" Type="Int32" />
+          <NavigationProperty Name="BuyingTickets" Relationship="ShiraDKDBModel.FK_BuyingTickets_Events" FromRole="Event" ToRole="BuyingTicket" />
+          <NavigationProperty Name="Organizer" Relationship="ShiraDKDBModel.FK_Events_Organizers" FromRole="Event" ToRole="Organizer" />
+          <NavigationProperty Name="ItemsForEvents" Relationship="ShiraDKDBModel.FK_ItemsForEvents_Events" FromRole="Event" ToRole="ItemsForEvent" />
+        </EntityType>
+        <EntityType Name="ItemsForEvent">
+          <Key>
+            <PropertyRef Name="Number" />
+          </Key>
+          <Property Name="Number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemsID" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="EventsID" Type="Int32" />
+          <NavigationProperty Name="Event" Relationship="ShiraDKDBModel.FK_ItemsForEvents_Events" FromRole="ItemsForEvent" ToRole="Event" />
+          <NavigationProperty Name="Item" Relationship="ShiraDKDBModel.FK_ItemsForEvents_Items" FromRole="ItemsForEvent" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="Organizer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="INN" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Events" Relationship="ShiraDKDBModel.FK_Events_Organizers" FromRole="Organizer" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="ShiraDKDBModel.FK_Users_Roles" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BuyingTickets" Relationship="ShiraDKDBModel.FK_BuyingTickets_Users" FromRole="User" ToRole="BuyingTicket" />
+          <NavigationProperty Name="BuyingTickets1" Relationship="ShiraDKDBModel.FK_BuyingTickets_Users1" FromRole="User" ToRole="BuyingTicket" />
+          <NavigationProperty Name="Role" Relationship="ShiraDKDBModel.FK_Users_Roles" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="WareHouses" Relationship="ShiraDKDBModel.FK_WareHouse_Users" FromRole="User" ToRole="WareHouse" />
+        </EntityType>
+        <EntityType Name="WareHouse">
+          <Key>
+            <PropertyRef Name="Number" />
+          </Key>
+          <Property Name="Number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="DateOfReceipt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="ShiraDKDBModel.FK_WareHouse_Users" FromRole="WareHouse" ToRole="User" />
+          <NavigationProperty Name="Item" Relationship="ShiraDKDBModel.FK_WareHouse_Items" FromRole="WareHouse" ToRole="Item" />
+        </EntityType>
+        <Association Name="FK_BuyingTickets_Events">
+          <End Type="ShiraDKDBModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="ShiraDKDBModel.BuyingTicket" Role="BuyingTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BuyingTicket">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BuyingTickets_Users">
+          <End Type="ShiraDKDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="ShiraDKDBModel.BuyingTicket" Role="BuyingTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BuyingTicket">
+              <PropertyRef Name="SalesmanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BuyingTickets_Users1">
+          <End Type="ShiraDKDBModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="ShiraDKDBModel.BuyingTicket" Role="BuyingTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BuyingTicket">
+              <PropertyRef Name="BuyerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Organizers">
+          <End Type="ShiraDKDBModel.Organizer" Role="Organizer" Multiplicity="1" />
+          <End Type="ShiraDKDBModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="OrganizerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemsForEvents_Events">
+          <End Type="ShiraDKDBModel.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="ShiraDKDBModel.ItemsForEvent" Role="ItemsForEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ItemsForEvent">
+              <PropertyRef Name="EventsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Type="ShiraDKDBModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="ShiraDKDBModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WareHouse_Users">
+          <End Type="ShiraDKDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="ShiraDKDBModel.WareHouse" Role="WareHouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WareHouse">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Width" Type="Double" />
+          <Property Name="Length" Type="Double" />
+          <Property Name="Height" Type="Double" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Weight" Type="Double" />
+          <Property Name="Count" Type="Int32" />
+          <NavigationProperty Name="ItemsForEvents" Relationship="ShiraDKDBModel.FK_ItemsForEvents_Items" FromRole="Item" ToRole="ItemsForEvent" />
+          <NavigationProperty Name="WareHouses" Relationship="ShiraDKDBModel.FK_WareHouse_Items" FromRole="Item" ToRole="WareHouse" />
+        </EntityType>
+        <Association Name="FK_ItemsForEvents_Items">
+          <End Type="ShiraDKDBModel.Item" Role="Item" Multiplicity="0..1" />
+          <End Type="ShiraDKDBModel.ItemsForEvent" Role="ItemsForEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ItemsForEvent">
+              <PropertyRef Name="ItemsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WareHouse_Items">
+          <End Type="ShiraDKDBModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="ShiraDKDBModel.WareHouse" Role="WareHouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WareHouse">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ShiraDKDBModelContainer" CdmEntityContainer="DBEntities">
+          <EntitySetMapping Name="BuyingTickets">
+            <EntityTypeMapping TypeName="ShiraDKDBModel.BuyingTicket">
+              <MappingFragment StoreEntitySet="BuyingTickets">
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="BuyerID" ColumnName="BuyerID" />
+                <ScalarProperty Name="SalesmanID" ColumnName="SalesmanID" />
+                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="ShiraDKDBModel.Event">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="NumberOfSeat" ColumnName="NumberOfSeat" />
+                <ScalarProperty Name="AvailableOfSeat" ColumnName="AvailableOfSeat" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="OrganizerID" ColumnName="OrganizerID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemsForEvents">
+            <EntityTypeMapping TypeName="ShiraDKDBModel.ItemsForEvent">
+              <MappingFragment StoreEntitySet="ItemsForEvents">
+                <ScalarProperty Name="EventsID" ColumnName="EventsID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ItemsID" ColumnName="ItemsID" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Organizers">
+            <EntityTypeMapping TypeName="ShiraDKDBModel.Organizer">
+              <MappingFragment StoreEntitySet="Organizers">
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="ShiraDKDBModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ShiraDKDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ShiraDKDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WareHouses">
+            <EntityTypeMapping TypeName="ShiraDKDBModel.WareHouse">
+              <MappingFragment StoreEntitySet="WareHouse">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="DateOfReceipt" ColumnName="DateOfReceipt" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="ShiraDKDBModel.Item">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

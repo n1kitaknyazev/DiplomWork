@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="95329df96950465ba84bacc5a9fc9214" Name="Diagram1">
+        <EntityTypeShape EntityType="ShiraDKDBModel.BuyingTicket" Width="1.5" PointX="5.25" PointY="5" />
+        <EntityTypeShape EntityType="ShiraDKDBModel.Event" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="ShiraDKDBModel.ItemsForEvent" Width="1.5" PointX="8.25" PointY="1.375" />
+        <EntityTypeShape EntityType="ShiraDKDBModel.Organizer" Width="1.5" PointX="0.75" PointY="3" />
+        <EntityTypeShape EntityType="ShiraDKDBModel.Role" Width="1.5" PointX="0.75" PointY="5.625" />
+        <EntityTypeShape EntityType="ShiraDKDBModel.sysdiagram" Width="1.5" PointX="0.75" PointY="9.125" />
+        <EntityTypeShape EntityType="ShiraDKDBModel.User" Width="1.5" PointX="3" PointY="5" />
+        <EntityTypeShape EntityType="ShiraDKDBModel.WareHouse" Width="1.5" PointX="8.25" PointY="5.25" />
+        <AssociationConnector Association="ShiraDKDBModel.FK_BuyingTickets_Events" />
+        <AssociationConnector Association="ShiraDKDBModel.FK_BuyingTickets_Users" />
+        <AssociationConnector Association="ShiraDKDBModel.FK_BuyingTickets_Users1" />
+        <AssociationConnector Association="ShiraDKDBModel.FK_Events_Organizers" />
+        <AssociationConnector Association="ShiraDKDBModel.FK_ItemsForEvents_Events" />
+        <AssociationConnector Association="ShiraDKDBModel.FK_Users_Roles" />
+        <AssociationConnector Association="ShiraDKDBModel.FK_WareHouse_Users" />
+        <EntityTypeShape EntityType="ShiraDKDBModel.Item" Width="1.5" PointX="6" PointY="0.875" />
+        <AssociationConnector Association="ShiraDKDBModel.FK_ItemsForEvents_Items" />
+        <AssociationConnector Association="ShiraDKDBModel.FK_WareHouse_Items" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
